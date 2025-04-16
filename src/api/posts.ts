@@ -75,7 +75,6 @@ export const fetchRelatedPosts = async (id: number) => {
     const relatedPosts = response.data.filter((post: { id: number }) =>
       postIds.includes(post.id)
     );
-    console.log(relatedPosts);
     return relatedPosts;
   } catch (error) {
     console.error('Error fetching related posts:', error);

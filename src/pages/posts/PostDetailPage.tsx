@@ -35,7 +35,10 @@ export default function PostDetailPage() {
       </div>
 
       <h2 className="text-3xl font-semibold mb-4">Related Posts</h2>
-      <div className="flex flex-row flex-wrap gap-4 justify-evenly">
+      <div
+        data-testid="related-posts-container"
+        className="flex flex-row flex-wrap gap-4 justify-evenly"
+      >
         {relatedPostsLoading && <div>Loading related posts...</div>}
         {relatedPostsError && <div>Error loading related posts</div>}
         {relatedPostsData &&

@@ -21,7 +21,10 @@ export default function PostsPage() {
 
   return (
     <>
-      <div className="px-4 py-8 flex flex-row gap-4 flex-wrap flex-items-center justify-center">
+      <div
+        data-testid="posts-container"
+        className="px-4 py-8 flex flex-row gap-4 flex-wrap flex-items-center justify-center"
+      >
         {posts.map((post: Post) => (
           <PostCard key={post.id} post={post} />
         ))}
