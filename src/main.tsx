@@ -7,23 +7,48 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NotFound from './pages/NotFoundPage.tsx';
 import PostsPage from './pages/posts/PostsPage.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from './contexts/authContext.tsx';
 import PostDetailPage from './pages/posts/PostDetailPage.tsx';
+import RegisterPage from './pages/auth/RegisterPage.tsx';
+import LoginPage from './pages/auth/LoginPage.tsx';
+import ProtectedRoute from './pages/ProtectedPage.tsx';
+import DashboardPage from './pages/DashboardPage.tsx';
 
 const router = createBrowserRouter([
   {
+    path: '/register',
+    element: <RegisterPage />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <NotFound />,
+  },
+  {
     path: '/',
-    element: <PostsPage />,
+    element: <ProtectedRoute />,
     errorElement: <NotFound />,
-  },
-  {
-    path: '/posts',
-    element: <PostsPage />,
-    errorElement: <NotFound />,
-    children: [],
-  },
-  {
-    path: '/posts/:id',
-    element: <PostDetailPage />,
+    children: [
+      {
+        path: '/',
+        element: <DashboardPage />,
+      },
+      {
+        path: '/dashboard',
+        element: <DashboardPage />,
+      },
+      {
+        path: '/posts',
+        element: <PostsPage />,
+        errorElement: <NotFound />,
+        children: [],
+      },
+      {
+        path: '/posts/:id',
+        element: <PostDetailPage />,
+      },
+    ],
   },
 ]);
 
@@ -31,8 +56,10 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
