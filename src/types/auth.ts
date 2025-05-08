@@ -17,9 +17,7 @@ export interface UserLoginData {
 }
 
 export interface AuthResponse {
-  body: {
-    accessToken: string;
-  };
+  accessToken: string;
 }
 export interface AuthResponseError {
   body: {

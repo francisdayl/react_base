@@ -29,6 +29,7 @@ export const loginUser = async (userData: UserLoginData) => {
     if (response.status !== 200) {
       throw new Error('Failed to log in user');
     }
+    console.log('Login response:', response);
     return response.data;
   } catch (error) {
     console.error('Error logging in user:', error);

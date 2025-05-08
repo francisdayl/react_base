@@ -1,5 +1,5 @@
 import { MemoryRouter } from "react-router-dom"
-import PostCard from "../../src/components/PostCard"
+import PostCard from "@components/PostCard"
 
 describe('postComponent.cy.tsx', () => {
   it('validates the visibility rules of the post component', () => {

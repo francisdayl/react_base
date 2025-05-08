@@ -10,7 +10,7 @@ export default function DashboardPage() {
   return (
     <div className="dashboard-page">
       <h1>
-        Hi <strong>{user.email}</strong>
+        Hi <strong data-testid="user-mail">{user.email}</strong>
       </h1>
       <p>Welcome to the dashboard!</p>
     </div>

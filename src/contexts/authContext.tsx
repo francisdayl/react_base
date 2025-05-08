@@ -58,13 +58,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Save user data and token
   function saveUser(data: AuthResponse) {
-    if (!data.body.accessToken) return;
-
+    if (!data.accessToken) return;
     try {
-      const userInfo = jwtDecode<UserData>(data.body.accessToken);
+      const userInfo = jwtDecode<UserData>(data.accessToken);
       setUser(userInfo);
       setIsAuthenticated(true);
-      localStorage.setItem('auth_token', data.body.accessToken);
+      localStorage.setItem('auth_token', data.accessToken);
     } catch (error) {
       console.error('Failed to parse token:', error);
       logout();

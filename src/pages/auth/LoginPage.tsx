@@ -47,6 +47,7 @@ export default function LoginForm() {
         <label className="block text-sm font-medium">Email</label>
         <input
           type="email"
+          data-testid="email-input"
           {...register('email')}
           className="w-full mt-1 p-2 border rounded-md"
         />
@@ -59,6 +60,7 @@ export default function LoginForm() {
         <label className="block text-sm font-medium">Password</label>
         <div className="relative">
           <input
+            data-testid="password-input"
             type={showPassword ? 'text' : 'password'}
             {...register('password')}
             className="w-full mt-1 p-2 border rounded-md pr-10"
@@ -77,6 +79,7 @@ export default function LoginForm() {
       </div>
 
       <button
+        data-testid="login-button"
         type="submit"
         className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
       >

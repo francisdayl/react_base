@@ -10,7 +10,7 @@ export default function ProtectedRoute() {
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  console.log('ProtectedRoute: isAuthenticated:', isAuthenticated);
+
   return (
     <PortalLayout>
       <Outlet />

@@ -34,6 +34,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             </Link>
           </div>
           <a
+            data-testid="sign-out"
             href="#"
             onClick={handleSignOut}
             className="text-red-500 hover:text-red-600 font-medium transition-colors"
