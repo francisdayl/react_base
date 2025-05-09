@@ -19,7 +19,11 @@ describe('template spec', () => {
     cy.get('[data-testid="login-button"]').click();
 
     cy.wait('@loginSuccess').its('response.statusCode').should('eq', 200);
-    cy.url().should('include', '/dashboard');
+    cy.wait(1000)
+    
+    cy.url().should(url => {
+      expect(url).to.include('/dashboard');
+    });
     cy.get('[data-testid="user-mail"]').should('have.text','JohnDoe@example.com');
 
     cy.get('[data-testid="sign-out"]').should('exist');

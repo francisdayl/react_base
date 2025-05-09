@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
 import { loginUser } from '../../api/auth';
-import { useAuth } from '../../lib/hooks';
+import { useAuthStore } from '@/store/authStore';
 
 // Zod schema
 const loginSchema = z.object({
@@ -17,7 +17,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const { saveUser } = useAuth();
+  const saveUser = useAuthStore((state) => state.saveUser);
   const navigate = useNavigate();
 
   const {
@@ -32,7 +32,9 @@ export default function LoginForm() {
     const response = await loginUser(data);
     if (!response.error) {
       saveUser(response);
+      console.log('Login successful:', response);
       navigate('/dashboard');
+      console.log('navigating to dashboard');
     }
   };
 

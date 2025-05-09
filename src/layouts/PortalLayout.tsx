@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/hooks';
+import { useAuthStore } from '@/store/authStore';
 
 interface PortalLayoutProps {
   children?: React.ReactNode;
 }
 
 export default function PortalLayout({ children }: PortalLayoutProps) {
-  const { logout } = useAuth();
+  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
   async function handleSignOut(e: React.MouseEvent<HTMLAnchorElement>) {

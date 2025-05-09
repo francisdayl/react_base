@@ -1,8 +1,7 @@
-import { useAuth } from '../lib/hooks';
+import { useAuthStore } from '@/store/authStore';
 
 export default function DashboardPage() {
-  const { getUser } = useAuth();
-  const user = getUser();
+  const user = useAuthStore((state) => state.user);
   if (!user) {
     return <div>Loading...</div>;
   }
