@@ -1,34 +1,66 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+// import App from './App.tsx';
+import './index.css';
 import './App.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import NotFound from './pages/NotFoundPage.tsx';
+import PostsPage from './pages/posts/PostsPage.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from './contexts/authContext.tsx';
+import PostDetailPage from './pages/posts/PostDetailPage.tsx';
+import RegisterPage from './pages/auth/RegisterPage.tsx';
+import LoginPage from './pages/auth/LoginPage.tsx';
+import ProtectedRoute from './pages/ProtectedPage.tsx';
+import DashboardPage from './pages/DashboardPage.tsx';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0);
+  const router = createBrowserRouter([
+    {
+      path: '/register',
+      element: <RegisterPage />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: '/login',
+      element: <LoginPage />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: '/',
+      element: <ProtectedRoute />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          path: '/',
+          element: <DashboardPage />,
+        },
+        {
+          path: '/dashboard',
+          element: <DashboardPage />,
+        },
+        {
+          path: '/posts',
+          element: <PostsPage />,
+          errorElement: <NotFound />,
+          children: [],
+        },
+        {
+          path: '/posts/:id',
+          element: <PostDetailPage />,
+        },
+      ],
+    },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 
