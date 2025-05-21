@@ -16,8 +16,8 @@ export default function ProtectedRoute() {
   const [tokenChecked, setTokenChecked] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      await dispatch(getTokenAction());
+    const checkAuth = () => {
+      dispatch(getTokenAction());
       setTokenChecked(true);
     };
     checkAuth();
