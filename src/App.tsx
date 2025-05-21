@@ -4,12 +4,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NotFound from './pages/NotFoundPage.tsx';
 import PostsPage from './pages/posts/PostsPage.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './contexts/authContext.tsx';
+import { Provider } from 'react-redux';
 import PostDetailPage from './pages/posts/PostDetailPage.tsx';
 import RegisterPage from './pages/auth/RegisterPage.tsx';
 import LoginPage from './pages/auth/LoginPage.tsx';
 import ProtectedRoute from './pages/ProtectedPage.tsx';
 import DashboardPage from './pages/DashboardPage.tsx';
+import { store } from './store/index.ts';
 
 const queryClient = new QueryClient();
 
@@ -53,11 +54,11 @@ function App() {
   ]);
 
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
-    </AuthProvider>
+    </Provider>
   );
 }
 

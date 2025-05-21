@@ -1,6 +1,10 @@
 import { env } from '../env';
 import axios from 'axios';
-import { UserLoginData, UserRegistrationData } from '../types/auth';
+import {
+  AuthResponse,
+  UserLoginData,
+  UserRegistrationData,
+} from '../types/auth';
 
 const API_URL = env.VITE_API_URL;
 
@@ -23,13 +27,14 @@ export const registerUser = async (userData: UserRegistrationData) => {
     throw error;
   }
 };
-export const loginUser = async (userData: UserLoginData) => {
+export const loginUser = async (
+  userData: UserLoginData
+): Promise<AuthResponse> => {
   try {
     const response = await authClient.post('/auth/login', userData);
     if (response.status !== 200) {
       throw new Error('Failed to log in user');
     }
-    console.log('Login response:', response);
     return response.data;
   } catch (error) {
     console.error('Error logging in user:', error);

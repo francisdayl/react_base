@@ -1,8 +1,8 @@
-import { useAuth } from '../lib/hooks';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/index.ts';
 
 export default function DashboardPage() {
-  const { getUser } = useAuth();
-  const user = getUser();
+  const { user } = useSelector((state: RootState) => state.auth);
   if (!user) {
     return <div>Loading...</div>;
   }

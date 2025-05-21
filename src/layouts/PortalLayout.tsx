@@ -1,17 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/hooks';
+import { logout } from '../store/authSlice';
+import { AppDispatch } from '@/store/index.ts';
+import { useDispatch } from 'react-redux';
 
 interface PortalLayoutProps {
   children?: React.ReactNode;
 }
 
 export default function PortalLayout({ children }: PortalLayoutProps) {
-  const { logout } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   async function handleSignOut(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    logout();
+    dispatch(logout());
     navigate('/login');
   }
 

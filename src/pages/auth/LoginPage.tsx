@@ -4,8 +4,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
-import { loginUser } from '../../api/auth';
-import { useAuth } from '../../lib/hooks';
+import { login as loginUserAction } from '@/store/authSlice.tsx';
+import { AppDispatch, RootState } from '@/store/index.ts';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Zod schema
 const loginSchema = z.object({
@@ -17,7 +18,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const { saveUser } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  const { isLoading } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
   const {
@@ -29,11 +31,9 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    const response = await loginUser(data);
-    if (!response.error) {
-      saveUser(response);
+    dispatch(loginUserAction(data)).then((_) => {
       navigate('/dashboard');
-    }
+    });
   };
 
   return (
@@ -67,6 +67,7 @@ export default function LoginForm() {
           />
           <button
             type="button"
+            disabled={isLoading}
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute right-2 top-2.5 text-gray-600"
           >
