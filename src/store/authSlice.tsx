@@ -71,10 +71,13 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
       // Get token case
+      .addCase(getToken.pending, (state) => {
+        state.isLoading = true;
+        state.isAuthenticated = false;
+      })
       .addCase(
         getToken.fulfilled,
         (state, action: PayloadAction<string | null>) => {
-          console.log('Token:', action.payload);
           const token = action.payload;
           if (token) {
             const decodedUser = jwtDecode<UserData>(token);
